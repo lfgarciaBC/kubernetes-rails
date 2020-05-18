@@ -15,11 +15,6 @@ RUN bundle install
 
 COPY . .
 
-# Zencron uses this to store logs
-RUN mkdir -p /data/zencoder/shared/log/
-
-RUN ./docker/setup_config.sh
-
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
