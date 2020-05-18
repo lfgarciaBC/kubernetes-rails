@@ -1,24 +1,23 @@
 FROM ruby:2.7.0
 
-# Adding nodejs as engine for the javascript bits
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -y
-RUN apt-get install -y --no-install-recommends apt-utils nodejs postgresql-client cron
+RUN apt-get update && apt-get install -y nodejs yarn postgresql-client
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
 
-WORKDIR /usr/src/app
+RUN mkdir /app
+WORKDIR /app
 
 COPY Gemfile Gemfile.lock ./
+RUN gem install bundler
 RUN bundle install
-
-COPY . .
+COPY . /app
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
+ENV RAILS_ENV=development
 EXPOSE 3000
 
 # Start the main process.
