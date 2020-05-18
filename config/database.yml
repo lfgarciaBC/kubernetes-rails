@@ -9,9 +9,8 @@ default: &default
   encoding: utf8
   reconnect: false
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-  host: <%= ENV.fetch('POSTGRES_HOST') { postgres } %>
-  username: <%= ENV.fetch('POSTGRES_USER') { postgres } %>
+  host: <%= ENV.fetch('POSTGRES_HOST') { 'postgres' } %>
+  username: <%= ENV.fetch('POSTGRES_USER') { 'postgres' } %>
   password: <%= ENV.fetch('POSTGRES_PASSWORD') {} %>
   port: <%= ENV.fetch('POSTGRES_PORT') { 5432 } %>
 
